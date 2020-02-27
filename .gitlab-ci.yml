@@ -14,7 +14,7 @@ cache:
     - .gradle/caches
 
 build:
-  stage: build
+  stage: build-project
   script:
     - ./gradlew assemble
   artifacts:
@@ -25,7 +25,7 @@ build:
     - feature/ci-cd
 
 test:
-  stage: test
+  stage: test-project
   script:
     - ./gradlew check
 
