@@ -9,6 +9,8 @@ public class Track {
     private Integer size;
     private TrackType trackType;
 
+    public Track() {}
+
     public Track(String id, String name, Integer size, TrackType trackType) {
         this.id = id;
         this.name = name;

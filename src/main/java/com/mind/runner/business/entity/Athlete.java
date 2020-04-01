@@ -2,7 +2,7 @@ package com.mind.runner.business.entity;
 
 public class Athlete {
 
-    private String id;
+    private Long id;
     private String firstName;
     private String lastName;
     private String password;
@@ -10,7 +10,9 @@ public class Athlete {
     private Integer age;
     private String goal;
 
-    private Athlete(String id, String firstName, String lastName, String password, String email, Integer age, String goal) {
+    public Athlete() {}
+
+    private Athlete(Long id, String firstName, String lastName, String password, String email, Integer age, String goal) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -25,7 +27,7 @@ public class Athlete {
     }
 
     public static class AthleteBuilder {
-        private String id;
+        private Long id;
         private String firstName;
         private String lastName;
         private String password;
@@ -33,7 +35,7 @@ public class Athlete {
         private Integer age;
         private String goal;
 
-        public AthleteBuilder withId(String id) {
+        public AthleteBuilder withId(Long id) {
             this.id = id;
             return this;
         }
@@ -45,6 +47,11 @@ public class Athlete {
 
         public AthleteBuilder withLastName(String lastName) {
             this.lastName = lastName;
+            return this;
+        }
+
+        public AthleteBuilder withPassword(String password) {
+            this.password = password;
             return this;
         }
 
@@ -68,11 +75,11 @@ public class Athlete {
         }
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

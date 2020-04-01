@@ -1,22 +1,33 @@
 package com.mind.runner;
 
-
+import com.mind.runner.business.entity.Athlete;
+import com.mind.runner.business.usecase.CreateAthlete;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
-@RestController
-public class RunnerApplication {
+public class RunnerApplication implements CommandLineRunner {
 
-    @RequestMapping("/")
-    public String home() {
-        return "Hello Docker World";
-    }
+    @Autowired
+    CreateAthlete createAthlete;
 
     public static void main(String[] args) {
         SpringApplication.run(RunnerApplication.class, args);
     }
 
+    @Override
+    public void run(String... args) throws Exception {
+        Athlete athlete = new Athlete().builder().
+                withFirstName("Mock first name").
+                withLastName("Mock last name").
+                withAge(35).
+                withGoal("Speed").
+                withPassword("x232Q2@1e").
+                withEmail("mock@mockdomain.com").
+                build();
+
+        createAthlete.create(athlete);
+    }
 }

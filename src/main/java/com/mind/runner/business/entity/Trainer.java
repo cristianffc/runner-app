@@ -10,6 +10,8 @@ public class Trainer {
     private Integer age;
     private String skill;
 
+    public Trainer() {}
+
     public Trainer(String id, String firstName, String lastName, String password, String email, Integer age, String skill) {
         this.id = id;
         this.firstName = firstName;
