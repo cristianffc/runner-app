@@ -3,16 +3,16 @@ package com.mind.runner.business.usecase;
 import com.mind.runner.business.entity.Athlete;
 import com.mind.runner.business.port.outbound.AthleteRepository;
 
-public class CreateAthlete {
+public class UpdateAthlete {
 
     private final AthleteRepository athleteRepository;
 
-    public CreateAthlete(AthleteRepository athleteRepository) {
+    public UpdateAthlete(AthleteRepository athleteRepository) {
         this.athleteRepository = athleteRepository;
     }
 
-    public void create(Athlete athlete){
-        athleteRepository.create(athlete);
+    public void update(Athlete athlete){
+        athleteRepository.update(athlete);
     }
 
 }

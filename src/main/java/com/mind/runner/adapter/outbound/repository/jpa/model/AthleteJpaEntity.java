@@ -1,7 +1,6 @@
 package com.mind.runner.adapter.outbound.repository.jpa.model;
 
 import com.mind.runner.business.entity.Athlete;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -16,20 +15,16 @@ public class AthleteJpaEntity {
     private Long id;
     private String firstName;
     private String lastName;
-    private String password;
-    private String email;
     private Integer age;
     private String goal;
     private Date createdAt;
 
     public AthleteJpaEntity() {}
 
-    private AthleteJpaEntity(Long id, String firstName, String lastName, String password, String email, Integer age, String goal) {
+    private AthleteJpaEntity(Long id, String firstName, String lastName, String password, Integer age, String goal) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.password = password;
-        this.email = email;
         this.age = age;
         this.goal = goal;
     }
@@ -58,22 +53,6 @@ public class AthleteJpaEntity {
         this.lastName = lastName;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public Integer getAge() {
         return age;
     }
@@ -100,8 +79,6 @@ public class AthleteJpaEntity {
                 withId(id).
                 withFirstName(firstName).
                 withLastName(lastName).
-                withPassword(password).
-                withEmail(email).
                 withAge(age).
                 withGoal(goal).
                 build();
@@ -113,9 +90,6 @@ public class AthleteJpaEntity {
         athleteJpaEntity.setId(athlete.getId());
         athleteJpaEntity.setFirstName(athlete.getFirstName());
         athleteJpaEntity.setLastName(athlete.getLastName());
-        athleteJpaEntity.setPassword(athlete.getPassword());
-        athleteJpaEntity.setEmail(athlete.getEmail());
-        athleteJpaEntity.setEmail(athlete.getEmail());
         athleteJpaEntity.setAge(athlete.getAge());
         athleteJpaEntity.setGoal(athlete.getGoal());
 

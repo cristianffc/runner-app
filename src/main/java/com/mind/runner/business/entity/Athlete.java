@@ -5,19 +5,15 @@ public class Athlete {
     private Long id;
     private String firstName;
     private String lastName;
-    private String password;
-    private String email;
     private Integer age;
     private String goal;
 
     public Athlete() {}
 
-    private Athlete(Long id, String firstName, String lastName, String password, String email, Integer age, String goal) {
+    private Athlete(Long id, String firstName, String lastName, Integer age, String goal) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.password = password;
-        this.email = email;
         this.age = age;
         this.goal = goal;
     }
@@ -30,8 +26,6 @@ public class Athlete {
         private Long id;
         private String firstName;
         private String lastName;
-        private String password;
-        private String email;
         private Integer age;
         private String goal;
 
@@ -50,16 +44,6 @@ public class Athlete {
             return this;
         }
 
-        public AthleteBuilder withPassword(String password) {
-            this.password = password;
-            return this;
-        }
-
-        public AthleteBuilder withEmail(String email) {
-            this.email = email;
-            return this;
-        }
-
         public AthleteBuilder withAge(Integer age) {
             this.age = age;
             return this;
@@ -71,7 +55,7 @@ public class Athlete {
         }
 
         public Athlete build() {
-            return new Athlete(id, firstName, lastName, password, email, age, goal);
+            return new Athlete(id, firstName, lastName, age, goal);
         }
     }
 
@@ -99,22 +83,6 @@ public class Athlete {
         this.lastName = lastName;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public Integer getAge() {
         return age;
     }
@@ -137,10 +105,9 @@ public class Athlete {
                 "id='" + id + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
                 ", age=" + age +
                 ", goal='" + goal + '\'' +
                 '}';
     }
+
 }

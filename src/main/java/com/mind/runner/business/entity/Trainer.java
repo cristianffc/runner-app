@@ -139,4 +139,5 @@ public class Trainer {
                 ", skill='" + skill + '\'' +
                 '}';
     }
+
 }
