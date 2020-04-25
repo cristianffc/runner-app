@@ -16,6 +16,7 @@ public class SpringConfiguration {
     private AthleteJpaRepository athleteJpaRepository;
 
     @Bean
+
     public SaveAthlete saveAthlete() {
         return new SaveAthlete(athleteJpaRepository);
     }
