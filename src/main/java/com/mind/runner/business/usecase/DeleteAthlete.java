@@ -1,6 +1,6 @@
 package com.mind.runner.business.usecase;
 
-import com.mind.runner.business.port.outbound.AthleteRepository;
+import com.mind.runner.business.port.AthleteRepository;
 
 public class DeleteAthlete {
 

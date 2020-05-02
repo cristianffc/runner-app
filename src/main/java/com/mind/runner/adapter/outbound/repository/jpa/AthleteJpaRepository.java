@@ -2,7 +2,7 @@ package com.mind.runner.adapter.outbound.repository.jpa;
 
 import com.mind.runner.adapter.outbound.repository.jpa.model.AthleteJpaEntity;
 import com.mind.runner.business.entity.Athlete;
-import com.mind.runner.business.port.outbound.AthleteRepository;
+import com.mind.runner.business.port.AthleteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import java.util.List;
@@ -30,6 +30,11 @@ public class AthleteJpaRepository implements AthleteRepository {
     public Athlete findById(Long id) {
         Optional<AthleteJpaEntity> athleteJpaEntity = athleteJpaRepositoryInterface.findById(id);
         return athleteJpaEntity.isPresent() ? athleteJpaEntity.get().toAthlete() : null;
+    }
+
+    public List<Athlete> findAll() {
+        List<AthleteJpaEntity> result = athleteJpaRepositoryInterface.findAll();
+        return convertToAthlete(result);
     }
 
     public List<Athlete> findByFirstNameIsStartingWith(String firstName) {

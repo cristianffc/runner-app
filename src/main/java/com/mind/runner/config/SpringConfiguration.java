@@ -8,6 +8,7 @@ import com.mind.runner.business.usecase.UpdateAthlete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 @Configuration
 public class SpringConfiguration {
@@ -16,7 +17,6 @@ public class SpringConfiguration {
     private AthleteJpaRepository athleteJpaRepository;
 
     @Bean
-
     public SaveAthlete saveAthlete() {
         return new SaveAthlete(athleteJpaRepository);
     }
@@ -35,5 +35,4 @@ public class SpringConfiguration {
     public UpdateAthlete updateAthlete() {
         return new UpdateAthlete(athleteJpaRepository);
     }
-
 }

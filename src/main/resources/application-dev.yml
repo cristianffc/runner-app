@@ -14,5 +14,10 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
 server:
   port: 8090
+
+security:
+  basic:
+    enabled: false

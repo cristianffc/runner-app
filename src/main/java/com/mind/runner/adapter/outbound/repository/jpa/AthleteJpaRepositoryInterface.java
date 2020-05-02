@@ -9,6 +9,8 @@ interface AthleteJpaRepositoryInterface extends CrudRepository<AthleteJpaEntity,
 
     List<AthleteJpaEntity> findByFirstNameIsStartingWith(String firstName);
 
+    List<AthleteJpaEntity> findAll();
+
     List<AthleteJpaEntity> findByAgeBetween(Integer from, Integer to);
 
     List<AthleteJpaEntity> findByGoalIsLike(String goal);

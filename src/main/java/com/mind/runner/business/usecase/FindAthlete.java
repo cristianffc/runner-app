@@ -1,7 +1,7 @@
 package com.mind.runner.business.usecase;
 
 import com.mind.runner.business.entity.Athlete;
-import com.mind.runner.business.port.outbound.AthleteRepository;
+import com.mind.runner.business.port.AthleteRepository;
 import java.util.List;
 
 public class FindAthlete {
@@ -14,6 +14,10 @@ public class FindAthlete {
 
     public Athlete findById(Long id) {
         return athleteRepository.findById(id);
+    }
+
+    public List<Athlete> findAll() {
+        return athleteRepository.findAll();
     }
 
     public List<Athlete> findByFirstNameIsStartingWith(String firstName) {

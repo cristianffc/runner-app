@@ -1,4 +1,4 @@
-package com.mind.runner.business.port.outbound;
+package com.mind.runner.business.port;
 
 import com.mind.runner.business.entity.Athlete;
 import java.util.List;
@@ -12,6 +12,8 @@ public interface AthleteRepository {
     void deleteById(Long id);
 
     Athlete findById(Long id);
+
+    List<Athlete> findAll();
 
     List<Athlete> findByFirstNameIsStartingWith(String firstName);
 

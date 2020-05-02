@@ -5,10 +5,13 @@ import com.mind.runner.business.usecase.DeleteAthlete;
 import com.mind.runner.business.usecase.FindAthlete;
 import com.mind.runner.business.usecase.SaveAthlete;
 import com.mind.runner.business.usecase.UpdateAthlete;
+import com.mind.runner.config.SpringConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
@@ -36,6 +39,7 @@ public class RunnerApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+
         Athlete a1 = new Athlete().builder().withFirstName("Mock Fist").withLastName("Mock1 last name").
                 withAge(35).withGoal("Speed").build();
         Athlete a2 = new Athlete().builder().withFirstName("Second Mock").withLastName("Mock2 last name").
