@@ -5,9 +5,9 @@ import java.util.List;
 
 public interface AthleteRepository {
 
-    void save(Athlete athlete);
+    Athlete save(Athlete athlete);
 
-    void update(Athlete athlete);
+    Athlete update(Athlete athlete);
 
     void deleteById(Long id);
 

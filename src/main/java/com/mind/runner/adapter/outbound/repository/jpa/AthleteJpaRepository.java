@@ -15,12 +15,14 @@ public class AthleteJpaRepository implements AthleteRepository {
     @Autowired
     AthleteJpaRepositoryInterface athleteJpaRepositoryInterface;
 
-    public void save(Athlete athlete) {
-        athleteJpaRepositoryInterface.save(AthleteJpaEntity.toAthleteJpaEntity(athlete));
+    public Athlete save(Athlete athlete) {
+        AthleteJpaEntity athleteJpaEntity = athleteJpaRepositoryInterface.save(AthleteJpaEntity.toAthleteJpaEntity(athlete));
+        return convertToAthlete(athleteJpaEntity);
     }
 
-    public void update(Athlete athlete) {
-        athleteJpaRepositoryInterface.save(AthleteJpaEntity.toAthleteJpaEntity(athlete));
+    public Athlete update(Athlete athlete) {
+        AthleteJpaEntity athleteJpaEntity = athleteJpaRepositoryInterface.save(AthleteJpaEntity.toAthleteJpaEntity(athlete));
+        return convertToAthlete(athleteJpaEntity);
     }
 
     public void deleteById(Long id) {
@@ -68,6 +70,11 @@ public class AthleteJpaRepository implements AthleteRepository {
                 map(AthleteJpaEntity::toAthlete).
                 collect(Collectors.toList());
         return athletes;
+    }
+
+    private Athlete convertToAthlete(AthleteJpaEntity result) {
+        Athlete athlete = result.toAthlete();
+        return athlete;
     }
 
 }

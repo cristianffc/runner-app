@@ -31,6 +31,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .and().csrf().ignoringAntMatchers("/h2/**")//don't apply CSRF protection to /h2-console
                     .and().headers().frameOptions().sameOrigin();//allow use of frame to same origin urls
         }
+        http.csrf().disable();
     }
 
     @Override

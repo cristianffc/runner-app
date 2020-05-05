@@ -11,8 +11,8 @@ public class SaveAthlete {
         this.athleteRepository = athleteRepository;
     }
 
-    public void save(Athlete athlete){
-        athleteRepository.save(athlete);
+    public Athlete save(Athlete athlete){
+        return athleteRepository.save(athlete);
     }
 
 }
