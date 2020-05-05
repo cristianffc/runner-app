@@ -25,11 +25,10 @@ public class AthleteApi {
 
     @GetMapping("/athlete")
     public ResponseEntity<List<Athlete>> findAll() {
-        List<Athlete> response = null;
         try {
-            response = findAthlete.findAll();
-            if(response != null) {
-                return new ResponseEntity<>(response, HttpStatus.OK);
+            List<Athlete> athletes = findAthlete.findAll();
+            if(athletes != null) {
+                return new ResponseEntity<>(athletes, HttpStatus.OK);
             }
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         } catch (Exception e) {
@@ -52,9 +51,8 @@ public class AthleteApi {
 
     @PostMapping(path = "/athlete", consumes = "application/json")
     public ResponseEntity<Athlete> save(@RequestBody Athlete newAthlete) {
-        Athlete athlete = null;
         try {
-            athlete = saveAthlete.save(newAthlete);
+            Athlete athlete = saveAthlete.save(newAthlete);
             return new ResponseEntity<>(athlete, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -63,9 +61,8 @@ public class AthleteApi {
 
     @PutMapping(path = "/athlete/{id}", consumes = "application/json")
     public ResponseEntity<Athlete> updateIdempotent(@PathVariable Long id, @RequestBody Athlete newAthlete) {
-        Athlete athlete = null;
         try {
-            athlete = updateAthlete.updateIdempotent(id, newAthlete);
+            Athlete athlete = updateAthlete.updateIdempotent(id, newAthlete);
             return new ResponseEntity<>(athlete, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -74,9 +71,8 @@ public class AthleteApi {
 
     @PatchMapping(path = "/athlete/{id}", consumes = "application/json")
     public ResponseEntity<Athlete> update(@PathVariable Long id, @RequestBody Athlete newAthlete) {
-        Athlete athlete = null;
         try {
-            athlete = updateAthlete.update(id, newAthlete);
+            Athlete athlete = updateAthlete.update(id, newAthlete);
             return new ResponseEntity<>(athlete, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
