@@ -28,7 +28,7 @@ build:
 test:
   stage: test
   script:
-    - ./gradlew check
+    - ./gradlew test
 
 after_script:
   - echo "End CI"
