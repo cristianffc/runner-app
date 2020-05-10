@@ -16,6 +16,7 @@ cache:
 build:
   stage: build
   script:
+    - ./gradlew clean
     - ./gradlew assemble
   artifacts:
     paths:
