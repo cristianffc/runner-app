@@ -23,7 +23,7 @@ build:
       - build/libs/*.jar
     expire_in: 1 week
   only:
-    - feature/ci-cd
+    - develop
 
 test:
   stage: test
