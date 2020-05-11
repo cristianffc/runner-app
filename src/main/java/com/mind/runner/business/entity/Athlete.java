@@ -112,4 +112,16 @@ public class Athlete {
     public Date getCreatedAt() { return createdAt; }
 
     public void setCreatedAt(Date createdAt) { this.createdAt = createdAt; }
+
+    @Override
+    public String toString() {
+        return "Athlete{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                ", goal='" + goal + '\'' +
+                ", createdAt=" + createdAt +
+                '}';
+    }
 }
