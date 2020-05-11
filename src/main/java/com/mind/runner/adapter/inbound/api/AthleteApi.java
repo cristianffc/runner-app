@@ -41,14 +41,14 @@ public class AthleteApi {
     @ApiOperation(value = "Find all athletes", produces = "application/json")
     public ResponseEntity<List<AthleteDto>> findAll() {
         try {
-            List<AthleteDto> athletes = findAthlete.findAll()
+            List<AthleteDto> athletesDto = findAthlete.findAll()
                                                    .stream()
                                                    .map(AthleteDto::toAthleteDto)
                                                    .collect(Collectors.toList());
             //HATEOAS
-            athletes.forEach(athleteDto -> athleteDto.add(linkTo(methodOn(AthleteApi.class).findById(
+            athletesDto.forEach(athleteDto -> athleteDto.add(linkTo(methodOn(AthleteApi.class).findById(
                     athleteDto.getId())).withSelfRel()));
-            return new ResponseEntity<>(athletes, HttpStatus.OK);
+            return new ResponseEntity<>(athletesDto, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -58,8 +58,8 @@ public class AthleteApi {
     @ApiOperation(value = "Save athlete")
     public ResponseEntity<AthleteDto> save(@RequestBody Athlete newAthlete) {
         try {
-            AthleteDto athlete = AthleteDto.toAthleteDto(saveAthlete.save(newAthlete));
-            return new ResponseEntity<>(athlete, HttpStatus.CREATED);
+            AthleteDto athleteDto = AthleteDto.toAthleteDto(saveAthlete.save(newAthlete));
+            return new ResponseEntity<>(athleteDto, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -69,11 +69,11 @@ public class AthleteApi {
     @ApiOperation(value = "Find athlete by id", produces = "application/json")
     public ResponseEntity<AthleteDto> findById(@PathVariable Long id) {
         try {
-            AthleteDto athlete = AthleteDto.toAthleteDto(findAthlete.findById(id));
+            AthleteDto athleteDto = AthleteDto.toAthleteDto(findAthlete.findById(id));
             //HATEOAS
-            athlete.add(linkTo(methodOn(AthleteApi.class).findAll()).withRel("findAll"));
-            athlete.add(linkTo(methodOn(AthleteApi.class).delete(athlete.getId())).withRel("delete"));
-            return new ResponseEntity<>(athlete, HttpStatus.OK);
+            athleteDto.add(linkTo(methodOn(AthleteApi.class).findAll()).withRel("findAll"));
+            athleteDto.add(linkTo(methodOn(AthleteApi.class).delete(athleteDto.getId())).withRel("delete"));
+            return new ResponseEntity<>(athleteDto, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -83,8 +83,8 @@ public class AthleteApi {
     @ApiOperation(value = "Update athlete (idempotent action)")
     public ResponseEntity<AthleteDto> updateIdempotent(@PathVariable Long id, @RequestBody Athlete newAthlete) {
         try {
-            AthleteDto athlete = AthleteDto.toAthleteDto(updateAthlete.updateIdempotent(id, newAthlete));
-            return new ResponseEntity<>(athlete, HttpStatus.OK);
+            AthleteDto athleteDto = AthleteDto.toAthleteDto(updateAthlete.updateIdempotent(id, newAthlete));
+            return new ResponseEntity<>(athleteDto, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -94,8 +94,8 @@ public class AthleteApi {
     @ApiOperation(value = "Update athlete (not idempotent action)")
     public ResponseEntity<AthleteDto> update(@PathVariable Long id, @RequestBody Athlete newAthlete) {
         try {
-            AthleteDto athlete = AthleteDto.toAthleteDto(updateAthlete.update(id, newAthlete));
-            return new ResponseEntity<>(athlete, HttpStatus.OK);
+            AthleteDto athleteDto = AthleteDto.toAthleteDto(updateAthlete.update(id, newAthlete));
+            return new ResponseEntity<>(athleteDto, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
