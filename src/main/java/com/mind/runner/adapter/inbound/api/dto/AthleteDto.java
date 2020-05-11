@@ -1,5 +1,6 @@
 package com.mind.runner.adapter.inbound.api.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mind.runner.business.entity.Athlete;
 import org.springframework.hateoas.RepresentationModel;
 import java.util.Date;
@@ -10,6 +11,7 @@ public class AthleteDto extends RepresentationModel<AthleteDto> {
     private String lastName;
     private Integer age;
     private String goal;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
     private Date createdAt;
 
     public Long getId() {

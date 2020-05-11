@@ -10,6 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -53,26 +54,26 @@ public class AthleteApi {
         }
     }
 
-    @GetMapping("/athletes/{id}")
-    @ApiOperation(value = "Find athlete by id", produces = "application/json")
-    public ResponseEntity<Athlete> findById(@PathVariable Long id) {
+    @PostMapping(path = "/athletes", consumes = "application/json", produces = "application/json")
+    @ApiOperation(value = "Save athlete")
+    public ResponseEntity<AthleteDto> save(@RequestBody Athlete newAthlete) {
         try {
-            Athlete athlete = findAthlete.findById(id);
-            if (athlete != null) {
-                return new ResponseEntity<>(athlete, HttpStatus.OK);
-            }
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            AthleteDto athlete = AthleteDto.toAthleteDto(saveAthlete.save(newAthlete));
+            return new ResponseEntity<>(athlete, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @PostMapping(path = "/athletes", consumes = "application/json", produces = "application/json")
-    @ApiOperation(value = "Save athlete")
-    public ResponseEntity<Athlete> save(@RequestBody Athlete newAthlete) {
+    @GetMapping("/athletes/{id}")
+    @ApiOperation(value = "Find athlete by id", produces = "application/json")
+    public ResponseEntity<AthleteDto> findById(@PathVariable Long id) {
         try {
-            Athlete athlete = saveAthlete.save(newAthlete);
-            return new ResponseEntity<>(athlete, HttpStatus.CREATED);
+            AthleteDto athlete = AthleteDto.toAthleteDto(findAthlete.findById(id));
+            //HATEOAS
+            athlete.add(linkTo(methodOn(AthleteApi.class).findAll()).withRel("findAll"));
+            athlete.add(linkTo(methodOn(AthleteApi.class).delete(athlete.getId())).withRel("delete"));
+            return new ResponseEntity<>(athlete, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -80,9 +81,9 @@ public class AthleteApi {
 
     @PutMapping(path = "/athletes/{id}", consumes = "application/json", produces = "application/json")
     @ApiOperation(value = "Update athlete (idempotent action)")
-    public ResponseEntity<Athlete> updateIdempotent(@PathVariable Long id, @RequestBody Athlete newAthlete) {
+    public ResponseEntity<AthleteDto> updateIdempotent(@PathVariable Long id, @RequestBody Athlete newAthlete) {
         try {
-            Athlete athlete = updateAthlete.updateIdempotent(id, newAthlete);
+            AthleteDto athlete = AthleteDto.toAthleteDto(updateAthlete.updateIdempotent(id, newAthlete));
             return new ResponseEntity<>(athlete, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -91,9 +92,9 @@ public class AthleteApi {
 
     @PatchMapping(path = "/athletes/{id}", consumes = "application/json", produces = "application/json")
     @ApiOperation(value = "Update athlete (not idempotent action)")
-    public ResponseEntity<Athlete> update(@PathVariable Long id, @RequestBody Athlete newAthlete) {
+    public ResponseEntity<AthleteDto> update(@PathVariable Long id, @RequestBody Athlete newAthlete) {
         try {
-            Athlete athlete = updateAthlete.update(id, newAthlete);
+            AthleteDto athlete = AthleteDto.toAthleteDto(updateAthlete.update(id, newAthlete));
             return new ResponseEntity<>(athlete, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -102,7 +103,7 @@ public class AthleteApi {
 
     @DeleteMapping(path = "/athletes/{id}", produces = "application/json")
     @ApiOperation(value = "Delete athlete")
-    public ResponseEntity<Athlete> delete(@PathVariable Long id) {
+    public ResponseEntity<AthleteDto> delete(@PathVariable Long id) {
         try {
             deleteAthlete.delete(id);
             return new ResponseEntity<>(null, HttpStatus.OK);
@@ -112,5 +113,13 @@ public class AthleteApi {
             }
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @RequestMapping(value = "/athletes/{id}", method = RequestMethod.OPTIONS)
+    @ApiOperation(value = "Available verbs")
+    public ResponseEntity<?> options() {
+        return ResponseEntity.ok()
+                             .allow(HttpMethod.GET, HttpMethod.DELETE, HttpMethod.PUT, HttpMethod.PATCH, HttpMethod.OPTIONS)
+                             .build();
     }
 }
