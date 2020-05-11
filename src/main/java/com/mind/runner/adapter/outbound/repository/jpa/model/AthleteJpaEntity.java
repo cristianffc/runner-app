@@ -69,6 +69,12 @@ public class AthleteJpaEntity {
         this.goal = goal;
     }
 
+    public Date getCreatedAt() { return createdAt; }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
     @PrePersist
     void createdAt() {
         this.createdAt = new Date();
@@ -81,6 +87,7 @@ public class AthleteJpaEntity {
                 withLastName(lastName).
                 withAge(age).
                 withGoal(goal).
+                withCreatedAt(createdAt).
                 build();
     }
 

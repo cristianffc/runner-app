@@ -1,5 +1,6 @@
 package com.mind.runner.adapter.inbound.api;
 
+import com.mind.runner.adapter.inbound.api.dto.AthleteDto;
 import com.mind.runner.business.entity.Athlete;
 import com.mind.runner.business.usecase.DeleteAthlete;
 import com.mind.runner.business.usecase.FindAthlete;
@@ -9,11 +10,16 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @Api(value = "API")
@@ -33,9 +39,18 @@ public class AthleteApi {
 
     @GetMapping("/athletes")
     @ApiOperation(value = "Find all athletes", produces = "application/json")
-    public ResponseEntity<List<Athlete>> findAll() {
+    public ResponseEntity<List<AthleteDto>> findAll() {
         try {
-            List<Athlete> athletes = findAthlete.findAll();
+            List<AthleteDto> athletes = findAthlete.findAll().
+                    stream().
+                    map(AthleteDto::toAthleteDto).
+                    collect(Collectors.toList());
+
+            //HATEOAS
+            athletes.stream().forEach(athleteDto ->
+                    athleteDto.add(linkTo(methodOn(AthleteApi.class).
+                            findById(athleteDto.getId())).withSelfRel()));
+
             if(athletes != null) {
                 return new ResponseEntity<>(athletes, HttpStatus.OK);
             }

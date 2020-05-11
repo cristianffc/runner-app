@@ -1,5 +1,7 @@
 package com.mind.runner.business.entity;
 
+import java.util.Date;
+
 public class Athlete {
 
     private Long id;
@@ -7,15 +9,17 @@ public class Athlete {
     private String lastName;
     private Integer age;
     private String goal;
+    private Date createdAt;
 
     public Athlete() {}
 
-    private Athlete(Long id, String firstName, String lastName, Integer age, String goal) {
+    private Athlete(Long id, String firstName, String lastName, Integer age, String goal, Date createAt) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.goal = goal;
+        this.createdAt = createAt;
     }
 
     public static AthleteBuilder builder() {
@@ -28,6 +32,7 @@ public class Athlete {
         private String lastName;
         private Integer age;
         private String goal;
+        private Date createdAt;
 
         public AthleteBuilder withId(Long id) {
             this.id = id;
@@ -54,8 +59,13 @@ public class Athlete {
             return this;
         }
 
+        public AthleteBuilder withCreatedAt(Date createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
         public Athlete build() {
-            return new Athlete(id, firstName, lastName, age, goal);
+            return new Athlete(id, firstName, lastName, age, goal, createdAt);
         }
     }
 
@@ -99,15 +109,7 @@ public class Athlete {
         this.goal = goal;
     }
 
-    @Override
-    public String toString() {
-        return "Athlete{" +
-                "id='" + id + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", age=" + age +
-                ", goal='" + goal + '\'' +
-                '}';
-    }
+    public Date getCreatedAt() { return createdAt; }
 
+    public void setCreatedAt(Date createdAt) { this.createdAt = createdAt; }
 }
