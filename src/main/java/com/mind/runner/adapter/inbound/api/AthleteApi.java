@@ -10,7 +10,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,20 +40,14 @@ public class AthleteApi {
     @ApiOperation(value = "Find all athletes", produces = "application/json")
     public ResponseEntity<List<AthleteDto>> findAll() {
         try {
-            List<AthleteDto> athletes = findAthlete.findAll().
-                    stream().
-                    map(AthleteDto::toAthleteDto).
-                    collect(Collectors.toList());
-
+            List<AthleteDto> athletes = findAthlete.findAll()
+                                                   .stream()
+                                                   .map(AthleteDto::toAthleteDto)
+                                                   .collect(Collectors.toList());
             //HATEOAS
-            athletes.stream().forEach(athleteDto ->
-                    athleteDto.add(linkTo(methodOn(AthleteApi.class).
-                            findById(athleteDto.getId())).withSelfRel()));
-
-            if(athletes != null) {
-                return new ResponseEntity<>(athletes, HttpStatus.OK);
-            }
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            athletes.forEach(athleteDto -> athleteDto.add(linkTo(methodOn(AthleteApi.class).findById(
+                    athleteDto.getId())).withSelfRel()));
+            return new ResponseEntity<>(athletes, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -65,7 +58,7 @@ public class AthleteApi {
     public ResponseEntity<Athlete> findById(@PathVariable Long id) {
         try {
             Athlete athlete = findAthlete.findById(id);
-            if(athlete != null) {
+            if (athlete != null) {
                 return new ResponseEntity<>(athlete, HttpStatus.OK);
             }
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -114,7 +107,7 @@ public class AthleteApi {
             deleteAthlete.delete(id);
             return new ResponseEntity<>(null, HttpStatus.OK);
         } catch (Exception e) {
-            if(e instanceof EmptyResultDataAccessException) {
+            if (e instanceof EmptyResultDataAccessException) {
                 return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
             }
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

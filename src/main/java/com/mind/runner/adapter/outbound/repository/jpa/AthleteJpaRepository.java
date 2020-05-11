@@ -5,6 +5,7 @@ import com.mind.runner.business.entity.Athlete;
 import com.mind.runner.business.port.AthleteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,7 +32,8 @@ public class AthleteJpaRepository implements AthleteRepository {
 
     public Athlete findById(Long id) {
         Optional<AthleteJpaEntity> athleteJpaEntity = athleteJpaRepositoryInterface.findById(id);
-        return athleteJpaEntity.isPresent() ? athleteJpaEntity.get().toAthlete() : null;
+        return athleteJpaEntity.map(AthleteJpaEntity::toAthlete)
+                               .orElse(null);
     }
 
     public List<Athlete> findAll() {
@@ -41,8 +43,9 @@ public class AthleteJpaRepository implements AthleteRepository {
 
     public List<Athlete> findByFirstNameIsStartingWith(String firstName) {
         List<AthleteJpaEntity> result = athleteJpaRepositoryInterface.findByFirstNameIsStartingWith(firstName);
-        List<Athlete> athletes = result.stream().map(AthleteJpaEntity::toAthlete).collect(Collectors.toList());
-        return athletes;
+        return result.stream()
+                     .map(AthleteJpaEntity::toAthlete)
+                     .collect(Collectors.toList());
     }
 
     public List<Athlete> findByAgeBetween(Integer from, Integer to) {
@@ -66,15 +69,13 @@ public class AthleteJpaRepository implements AthleteRepository {
     }
 
     private List<Athlete> convertToAthlete(List<AthleteJpaEntity> result) {
-        List<Athlete> athletes = result.stream().
-                map(AthleteJpaEntity::toAthlete).
-                collect(Collectors.toList());
-        return athletes;
+        return result.stream()
+                     .map(AthleteJpaEntity::toAthlete)
+                     .collect(Collectors.toList());
     }
 
     private Athlete convertToAthlete(AthleteJpaEntity result) {
-        Athlete athlete = result.toAthlete();
-        return athlete;
+        return result.toAthlete();
     }
 
 }
