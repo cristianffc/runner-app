@@ -5,10 +5,9 @@ import com.mind.runner.business.entity.Athlete;
 import com.mind.runner.business.port.AthleteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+import static java.util.stream.Collectors.*;
 
 @Repository
 public class AthleteJpaRepository implements AthleteRepository {
@@ -17,65 +16,69 @@ public class AthleteJpaRepository implements AthleteRepository {
     AthleteJpaRepositoryInterface athleteJpaRepositoryInterface;
 
     public Athlete save(Athlete athlete) {
-        AthleteJpaEntity athleteJpaEntity = athleteJpaRepositoryInterface.save(AthleteJpaEntity.toAthleteJpaEntity(athlete));
-        return convertToAthlete(athleteJpaEntity);
+        AthleteJpaEntity athleteJpaEntity =
+                athleteJpaRepositoryInterface.save(AthleteJpaEntity.athleteJpaEntityBuilder(athlete));
+        return athleteJpaEntity.athleteBuilder();
     }
 
     public Athlete update(Athlete athlete) {
-        AthleteJpaEntity athleteJpaEntity = athleteJpaRepositoryInterface.save(AthleteJpaEntity.toAthleteJpaEntity(athlete));
-        return convertToAthlete(athleteJpaEntity);
+        AthleteJpaEntity athleteJpaEntity =
+                athleteJpaRepositoryInterface.save(AthleteJpaEntity.athleteJpaEntityBuilder(athlete));
+        return athleteJpaEntity.athleteBuilder();
     }
 
     public void deleteById(Long id) {
         athleteJpaRepositoryInterface.deleteById(id);
     }
 
-    public Athlete findById(Long id) {
+    public Optional<Athlete> findById(Long id) {
         Optional<AthleteJpaEntity> athleteJpaEntity = athleteJpaRepositoryInterface.findById(id);
-        return athleteJpaEntity.map(AthleteJpaEntity::toAthlete)
-                               .orElse(null);
+        if (athleteJpaEntity.isPresent()) {
+            return Optional.of(athleteJpaEntity.get()
+                                               .athleteBuilder());
+        }
+        return Optional.empty();
     }
 
     public List<Athlete> findAll() {
         List<AthleteJpaEntity> result = athleteJpaRepositoryInterface.findAll();
-        return convertToAthlete(result);
+        return result.stream()
+                     .map(AthleteJpaEntity::athleteBuilder)
+                     .collect(toList());
     }
 
     public List<Athlete> findByFirstNameIsStartingWith(String firstName) {
         List<AthleteJpaEntity> result = athleteJpaRepositoryInterface.findByFirstNameIsStartingWith(firstName);
         return result.stream()
-                     .map(AthleteJpaEntity::toAthlete)
-                     .collect(Collectors.toList());
+                     .map(AthleteJpaEntity::athleteBuilder)
+                     .collect(toList());
     }
 
     public List<Athlete> findByAgeBetween(Integer from, Integer to) {
         List<AthleteJpaEntity> result = athleteJpaRepositoryInterface.findByAgeBetween(from, to);
-        return convertToAthlete(result);
+        return result.stream()
+                     .map(AthleteJpaEntity::athleteBuilder)
+                     .collect(toList());
     }
 
     public List<Athlete> findByGoalIsLike(String goal) {
         List<AthleteJpaEntity> result = athleteJpaRepositoryInterface.findByGoalIsLike(goal);
-        return convertToAthlete(result);
+        return result.stream()
+                     .map(AthleteJpaEntity::athleteBuilder)
+                     .collect(toList());
     }
 
     public List<Athlete> findByOrderByCreatedAtDesc() {
         List<AthleteJpaEntity> result = athleteJpaRepositoryInterface.findByOrderByCreatedAtDesc();
-        return convertToAthlete(result);
+        return result.stream()
+                     .map(AthleteJpaEntity::athleteBuilder)
+                     .collect(toList());
     }
 
     public List<Athlete> findAthleteBySoccerTraining() {
         List<AthleteJpaEntity> result = athleteJpaRepositoryInterface.findAthleteJpaEntityBySoccerTraining();
-        return convertToAthlete(result);
-    }
-
-    private List<Athlete> convertToAthlete(List<AthleteJpaEntity> result) {
         return result.stream()
-                     .map(AthleteJpaEntity::toAthlete)
-                     .collect(Collectors.toList());
+                     .map(AthleteJpaEntity::athleteBuilder)
+                     .collect(toList());
     }
-
-    private Athlete convertToAthlete(AthleteJpaEntity result) {
-        return result.toAthlete();
-    }
-
 }

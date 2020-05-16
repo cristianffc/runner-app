@@ -2,6 +2,11 @@ package com.mind.runner.business.port;
 
 import com.mind.runner.business.entity.Athlete;
 import java.util.List;
+import java.util.Optional;
+
+/**
+ * API contract. The Adapter provider must implement this interface.
+ */
 
 public interface AthleteRepository {
 
@@ -11,7 +16,7 @@ public interface AthleteRepository {
 
     void deleteById(Long id);
 
-    Athlete findById(Long id);
+    Optional<Athlete> findById(Long id);
 
     List<Athlete> findAll();
 
@@ -24,5 +29,4 @@ public interface AthleteRepository {
     List<Athlete> findByOrderByCreatedAtDesc();
 
     List<Athlete> findAthleteBySoccerTraining();
-
 }

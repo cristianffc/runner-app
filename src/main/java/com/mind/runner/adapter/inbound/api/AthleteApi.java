@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -42,9 +43,9 @@ public class AthleteApi {
     public ResponseEntity<List<AthleteDto>> findAll() {
         try {
             List<AthleteDto> athletesDto = findAthlete.findAll()
-                                                   .stream()
-                                                   .map(AthleteDto::toAthleteDto)
-                                                   .collect(Collectors.toList());
+                                                      .stream()
+                                                      .map(AthleteDto::athleteDtoBuilder)
+                                                      .collect(Collectors.toList());
             //HATEOAS
             athletesDto.forEach(athleteDto -> athleteDto.add(linkTo(methodOn(AthleteApi.class).findById(
                     athleteDto.getId())).withSelfRel()));
@@ -58,7 +59,7 @@ public class AthleteApi {
     @ApiOperation(value = "Save athlete")
     public ResponseEntity<AthleteDto> save(@RequestBody Athlete newAthlete) {
         try {
-            AthleteDto athleteDto = AthleteDto.toAthleteDto(saveAthlete.save(newAthlete));
+            AthleteDto athleteDto = AthleteDto.athleteDtoBuilder(saveAthlete.save(newAthlete));
             return new ResponseEntity<>(athleteDto, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -69,11 +70,17 @@ public class AthleteApi {
     @ApiOperation(value = "Find athlete by id", produces = "application/json")
     public ResponseEntity<AthleteDto> findById(@PathVariable Long id) {
         try {
-            AthleteDto athleteDto = AthleteDto.toAthleteDto(findAthlete.findById(id));
-            //HATEOAS
-            athleteDto.add(linkTo(methodOn(AthleteApi.class).findAll()).withRel("findAll"));
-            athleteDto.add(linkTo(methodOn(AthleteApi.class).delete(athleteDto.getId())).withRel("delete"));
-            return new ResponseEntity<>(athleteDto, HttpStatus.OK);
+            Optional<Athlete> athlete = findAthlete.findById(id);
+            if(athlete.isPresent()) {
+                AthleteDto athleteDto = AthleteDto.athleteDtoBuilder(athlete.get());
+
+                //HATEOAS
+                athleteDto.add(linkTo(methodOn(AthleteApi.class).findAll()).withRel("findAll"));
+                athleteDto.add(linkTo(methodOn(AthleteApi.class).delete(athleteDto.getId())).withRel("delete"));
+                return new ResponseEntity<>(athleteDto, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -83,8 +90,13 @@ public class AthleteApi {
     @ApiOperation(value = "Update athlete (idempotent action)")
     public ResponseEntity<AthleteDto> updateIdempotent(@PathVariable Long id, @RequestBody Athlete newAthlete) {
         try {
-            AthleteDto athleteDto = AthleteDto.toAthleteDto(updateAthlete.updateIdempotent(id, newAthlete));
-            return new ResponseEntity<>(athleteDto, HttpStatus.OK);
+            Optional<Athlete> athlete = updateAthlete.updateIdempotent(id, newAthlete);
+            if(athlete.isPresent()) {
+                AthleteDto athleteDto = AthleteDto.athleteDtoBuilder(athlete.get());
+                return new ResponseEntity<>(athleteDto, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -94,8 +106,13 @@ public class AthleteApi {
     @ApiOperation(value = "Update athlete (not idempotent action)")
     public ResponseEntity<AthleteDto> update(@PathVariable Long id, @RequestBody Athlete newAthlete) {
         try {
-            AthleteDto athleteDto = AthleteDto.toAthleteDto(updateAthlete.update(id, newAthlete));
-            return new ResponseEntity<>(athleteDto, HttpStatus.OK);
+            Optional<Athlete> athlete = updateAthlete.update(id, newAthlete);
+            if(athlete.isPresent()) {
+                AthleteDto athleteDto = AthleteDto.athleteDtoBuilder(athlete.get());
+                return new ResponseEntity<>(athleteDto, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -119,7 +136,8 @@ public class AthleteApi {
     @ApiOperation(value = "Available verbs")
     public ResponseEntity<?> options() {
         return ResponseEntity.ok()
-                             .allow(HttpMethod.GET, HttpMethod.DELETE, HttpMethod.PUT, HttpMethod.PATCH, HttpMethod.OPTIONS)
+                             .allow(HttpMethod.GET, HttpMethod.DELETE, HttpMethod.PUT, HttpMethod.PATCH,
+                                     HttpMethod.OPTIONS)
                              .build();
     }
 }

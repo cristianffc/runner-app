@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mind.runner.business.entity.Athlete;
 import org.springframework.hateoas.RepresentationModel;
 import java.util.Date;
+import java.util.Optional;
 
 public class AthleteDto extends RepresentationModel<AthleteDto> {
+
     private Long id;
     private String firstName;
     private String lastName;
@@ -62,7 +64,7 @@ public class AthleteDto extends RepresentationModel<AthleteDto> {
         this.createdAt = createdAt;
     }
 
-    public static AthleteDto toAthleteDto(Athlete athlete) {
+    public static AthleteDto athleteDtoBuilder(Athlete athlete) {
         var AthleteDto = new AthleteDto();
 
         AthleteDto.setId(athlete.getId());
@@ -74,5 +76,4 @@ public class AthleteDto extends RepresentationModel<AthleteDto> {
 
         return AthleteDto;
     }
-
 }

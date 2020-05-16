@@ -2,6 +2,10 @@ package com.mind.runner.business.usecase;
 
 import com.mind.runner.business.port.AthleteRepository;
 
+/**
+ * Delete athlete user story
+ */
+
 public class DeleteAthlete {
 
     private final AthleteRepository athleteRepository;
@@ -10,8 +14,7 @@ public class DeleteAthlete {
         this.athleteRepository = athleteRepository;
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         athleteRepository.deleteById(id);
     }
-
 }

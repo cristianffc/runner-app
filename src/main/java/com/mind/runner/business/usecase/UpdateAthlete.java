@@ -3,6 +3,12 @@ package com.mind.runner.business.usecase;
 import com.mind.runner.business.entity.Athlete;
 import com.mind.runner.business.port.AthleteRepository;
 
+import java.util.Optional;
+
+/**
+ * Update athlete user story
+ */
+
 public class UpdateAthlete {
 
     private final AthleteRepository athleteRepository;
@@ -11,27 +17,32 @@ public class UpdateAthlete {
         this.athleteRepository = athleteRepository;
     }
 
-    public Athlete updateIdempotent(Long id, Athlete newAthlete){
-        Athlete athlete = athleteRepository.findById(id);
-        newAthlete.setId(athlete.getId());
-        return athleteRepository.update(newAthlete);
+    public Optional<Athlete> updateIdempotent(Long id, Athlete newAthlete) {
+        Optional<Athlete> athlete = athleteRepository.findById(id);
+        if (athlete.isPresent()) {
+            newAthlete.setId(athlete.get().getId());
+            return Optional.of(athleteRepository.update(newAthlete));
+        }
+        return athlete;
     }
 
-    public Athlete update(Long id, Athlete newAthlete){
-        Athlete athlete = athleteRepository.findById(id);
-        if(newAthlete.getAge() != null) {
-            athlete.setAge(newAthlete.getAge());
+    public Optional<Athlete> update(Long id, Athlete newAthlete) {
+        Optional<Athlete> athlete = athleteRepository.findById(id);
+        if(athlete.isPresent()) {
+            if (newAthlete.getAge() != null) {
+                athlete.get().setAge(newAthlete.getAge());
+            }
+            if (newAthlete.getFirstName() != null) {
+                athlete.get().setFirstName(newAthlete.getFirstName());
+            }
+            if (newAthlete.getLastName() != null) {
+                athlete.get().setLastName(newAthlete.getLastName());
+            }
+            if (newAthlete.getGoal() != null) {
+                athlete.get().setGoal(newAthlete.getGoal());
+            }
+            return Optional.of(athleteRepository.update(athlete.get()));
         }
-        if(newAthlete.getFirstName() != null) {
-            athlete.setFirstName(newAthlete.getFirstName());
-        }
-        if(newAthlete.getLastName() != null) {
-            athlete.setLastName(newAthlete.getLastName());
-        }
-        if(newAthlete.getGoal() != null) {
-            athlete.setGoal(newAthlete.getGoal());
-        }
-        return athleteRepository.update(athlete);
+        return athlete;
     }
-
 }

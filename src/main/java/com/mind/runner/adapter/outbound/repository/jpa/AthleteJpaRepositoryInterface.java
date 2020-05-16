@@ -19,5 +19,4 @@ interface AthleteJpaRepositoryInterface extends CrudRepository<AthleteJpaEntity,
 
     @Query("Select a from AthleteJpaEntity a where a.goal='Soccer'")
     List<AthleteJpaEntity> findAthleteJpaEntityBySoccerTraining();
-
 }

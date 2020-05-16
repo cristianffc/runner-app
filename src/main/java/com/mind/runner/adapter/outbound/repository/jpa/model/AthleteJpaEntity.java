@@ -80,7 +80,7 @@ public class AthleteJpaEntity {
         this.createdAt = new Date();
     }
 
-    public Athlete toAthlete() {
+    public Athlete athleteBuilder() {
         return Athlete.builder().
                 withId(id).
                 withFirstName(firstName).
@@ -91,7 +91,7 @@ public class AthleteJpaEntity {
                 build();
     }
 
-    public static AthleteJpaEntity toAthleteJpaEntity(Athlete athlete) {
+    public static AthleteJpaEntity athleteJpaEntityBuilder(Athlete athlete) {
         var athleteJpaEntity = new AthleteJpaEntity();
 
         athleteJpaEntity.setId(athlete.getId());
@@ -102,5 +102,4 @@ public class AthleteJpaEntity {
 
         return athleteJpaEntity;
     }
-
 }

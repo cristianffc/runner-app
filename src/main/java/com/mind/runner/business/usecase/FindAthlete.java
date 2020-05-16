@@ -3,6 +3,11 @@ package com.mind.runner.business.usecase;
 import com.mind.runner.business.entity.Athlete;
 import com.mind.runner.business.port.AthleteRepository;
 import java.util.List;
+import java.util.Optional;
+
+/**
+ * Find athlete user story
+ */
 
 public class FindAthlete {
 
@@ -12,7 +17,7 @@ public class FindAthlete {
         this.athleteRepository = athleteRepository;
     }
 
-    public Athlete findById(Long id) {
+    public Optional<Athlete> findById(Long id) {
         return athleteRepository.findById(id);
     }
 
@@ -25,7 +30,7 @@ public class FindAthlete {
     }
 
     public List<Athlete> findByAgeBetween(Integer from, Integer to) {
-        return athleteRepository.findByAgeBetween(from,to);
+        return athleteRepository.findByAgeBetween(from, to);
     }
 
     public List<Athlete> findByGoalIsLike(String goal) {
@@ -39,5 +44,4 @@ public class FindAthlete {
     public List<Athlete> findAthleteBySoccerTraining() {
         return athleteRepository.findAthleteBySoccerTraining();
     }
-
 }
