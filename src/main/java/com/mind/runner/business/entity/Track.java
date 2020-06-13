@@ -4,6 +4,8 @@ import com.mind.runner.business.entity.enums.Surface;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.util.Date;
+
 public class Track {
 
     private String id;
@@ -13,10 +15,12 @@ public class Track {
     private String country;
     private String city;
     private String address;
+    private Date createdAt;
 
     public Track() {}
 
-    public Track(String id, String name, Integer size, Surface surface, String country, String city, String address) {
+    public Track(String id, String name, Integer size, Surface surface, String country, String city,
+                 String address, Date createdAt) {
         this.id = id;
         this.name = name;
         this.size = size;
@@ -24,6 +28,7 @@ public class Track {
         this.country = country;
         this.city = city;
         this.address = address;
+        this.createdAt = createdAt;
     }
 
     public String getId() {
@@ -82,6 +87,14 @@ public class Track {
         this.address = address;
     }
 
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public static TrackBuilder builder() {
         return new TrackBuilder();
     }
@@ -95,6 +108,7 @@ public class Track {
         private String country;
         private String city;
         private String address;
+        private Date createdAt;
 
         public TrackBuilder withId(String id) {
             this.id = id;
@@ -110,8 +124,8 @@ public class Track {
             this.size = size;
             return this;
         }
-        public TrackBuilder withSurface(Integer size) {
-            this.size = size;
+        public TrackBuilder withSurface(Surface surfaca) {
+            this.surface = surface;
             return this;
         }
 
@@ -130,8 +144,13 @@ public class Track {
             return this;
         }
 
+        public TrackBuilder withCreatedAt(Date createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
         public Track build() {
-            return new Track(id, name, size, surface, country, city, address);
+            return new Track(id, name, size, surface, country, city, address, createdAt);
         }
     }
 
