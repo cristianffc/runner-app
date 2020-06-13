@@ -1,11 +1,10 @@
 package com.mind.runner.business.entity.enums;
 
-public enum TrackType {
-
+public enum Surface {
     ASPHALT,
     GRASS,
     SAND,
-    DIRT,
     TRAIL,
-    SYNTHETIC
+    SYNTHETIC,
+    SNOW
 }

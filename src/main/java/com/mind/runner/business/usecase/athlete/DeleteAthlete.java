@@ -1,4 +1,4 @@
-package com.mind.runner.business.usecase;
+package com.mind.runner.business.usecase.athlete;
 
 import com.mind.runner.business.port.AthleteRepository;
 

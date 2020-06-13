@@ -1,8 +1,7 @@
-package com.mind.runner.business.usecase;
+package com.mind.runner.business.usecase.athlete;
 
 import com.mind.runner.business.entity.Athlete;
 import com.mind.runner.business.port.AthleteRepository;
-import java.util.Optional;
 
 /*
  * Save athlete user story

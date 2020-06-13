@@ -2,13 +2,12 @@ package com.mind.runner.adapter.inbound.api;
 
 import com.mind.runner.adapter.inbound.api.dto.AthleteDto;
 import com.mind.runner.business.entity.Athlete;
-import com.mind.runner.business.usecase.DeleteAthlete;
-import com.mind.runner.business.usecase.FindAthlete;
-import com.mind.runner.business.usecase.SaveAthlete;
-import com.mind.runner.business.usecase.UpdateAthlete;
+import com.mind.runner.business.usecase.athlete.DeleteAthlete;
+import com.mind.runner.business.usecase.athlete.FindAthlete;
+import com.mind.runner.business.usecase.athlete.SaveAthlete;
+import com.mind.runner.business.usecase.athlete.UpdateAthlete;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -26,17 +25,18 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Api(value = "API")
 public class AthleteApi {
 
-    @Autowired
     private FindAthlete findAthlete;
-
-    @Autowired
     private SaveAthlete saveAthlete;
-
-    @Autowired
     private UpdateAthlete updateAthlete;
-
-    @Autowired
     private DeleteAthlete deleteAthlete;
+
+    public AthleteApi(FindAthlete findAthlete, SaveAthlete saveAthlete, UpdateAthlete updateAthlete,
+                      DeleteAthlete deleteAthlete) {
+        this.findAthlete = findAthlete;
+        this.saveAthlete = saveAthlete;
+        this.updateAthlete = updateAthlete;
+        this.deleteAthlete = deleteAthlete;
+    }
 
     @GetMapping("/athletes")
     @ApiOperation(value = "Find all athletes", produces = "application/json")

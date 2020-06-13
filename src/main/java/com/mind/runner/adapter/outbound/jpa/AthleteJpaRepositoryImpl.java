@@ -1,6 +1,6 @@
-package com.mind.runner.adapter.outbound.repository.jpa;
+package com.mind.runner.adapter.outbound.jpa;
 
-import com.mind.runner.adapter.outbound.repository.jpa.model.AthleteJpaEntity;
+import com.mind.runner.adapter.outbound.jpa.entity.AthleteJpaEntity;
 import com.mind.runner.business.entity.Athlete;
 import com.mind.runner.business.port.AthleteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +10,14 @@ import java.util.Optional;
 import static java.util.stream.Collectors.*;
 
 @Repository
-public class AthleteJpaRepository implements AthleteRepository {
+public class AthleteJpaRepositoryImpl implements AthleteRepository {
+
+    AthleteJpaRepositoryInterface athleteJpaRepositoryInterface;
 
     @Autowired
-    AthleteJpaRepositoryInterface athleteJpaRepositoryInterface;
+    public void setAthleteJpaRepositoryInterface(AthleteJpaRepositoryInterface athleteJpaRepositoryInterface) {
+        this.athleteJpaRepositoryInterface = athleteJpaRepositoryInterface;
+    }
 
     public Athlete save(Athlete athlete) {
         AthleteJpaEntity athleteJpaEntity =
@@ -54,15 +58,8 @@ public class AthleteJpaRepository implements AthleteRepository {
                      .collect(toList());
     }
 
-    public List<Athlete> findByAgeBetween(Integer from, Integer to) {
-        List<AthleteJpaEntity> result = athleteJpaRepositoryInterface.findByAgeBetween(from, to);
-        return result.stream()
-                     .map(AthleteJpaEntity::athleteBuilder)
-                     .collect(toList());
-    }
-
-    public List<Athlete> findByGoalIsLike(String goal) {
-        List<AthleteJpaEntity> result = athleteJpaRepositoryInterface.findByGoalIsLike(goal);
+    public List<Athlete> findByEmailIsLike(String goal) {
+        List<AthleteJpaEntity> result = athleteJpaRepositoryInterface.findByEmailIsLike(goal);
         return result.stream()
                      .map(AthleteJpaEntity::athleteBuilder)
                      .collect(toList());
@@ -75,10 +72,4 @@ public class AthleteJpaRepository implements AthleteRepository {
                      .collect(toList());
     }
 
-    public List<Athlete> findAthleteBySoccerTraining() {
-        List<AthleteJpaEntity> result = athleteJpaRepositoryInterface.findAthleteJpaEntityBySoccerTraining();
-        return result.stream()
-                     .map(AthleteJpaEntity::athleteBuilder)
-                     .collect(toList());
-    }
 }

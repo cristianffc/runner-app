@@ -1,37 +1,39 @@
 package com.mind.runner.config;
 
-import com.mind.runner.adapter.outbound.repository.jpa.AthleteJpaRepository;
-import com.mind.runner.business.usecase.DeleteAthlete;
-import com.mind.runner.business.usecase.FindAthlete;
-import com.mind.runner.business.usecase.SaveAthlete;
-import com.mind.runner.business.usecase.UpdateAthlete;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.mind.runner.adapter.outbound.jpa.AthleteJpaRepositoryImpl;
+import com.mind.runner.business.port.AthleteRepository;
+import com.mind.runner.business.usecase.athlete.DeleteAthlete;
+import com.mind.runner.business.usecase.athlete.FindAthlete;
+import com.mind.runner.business.usecase.athlete.SaveAthlete;
+import com.mind.runner.business.usecase.athlete.UpdateAthlete;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SpringConfiguration {
 
-    @Autowired
-    private AthleteJpaRepository athleteJpaRepository;
-
     @Bean
-    public SaveAthlete saveAthlete() {
-        return new SaveAthlete(athleteJpaRepository);
+    AthleteRepository athleteRepository() {
+        return new AthleteJpaRepositoryImpl();
     }
 
     @Bean
-    public FindAthlete findAthlete() {
-        return new FindAthlete(athleteJpaRepository);
+    SaveAthlete saveAthlete() {
+        return new SaveAthlete(athleteRepository());
     }
 
     @Bean
-    public DeleteAthlete deleteAthlete() {
-        return new DeleteAthlete(athleteJpaRepository);
+    FindAthlete findAthlete() {
+        return new FindAthlete(athleteRepository());
     }
 
     @Bean
-    public UpdateAthlete updateAthlete() {
-        return new UpdateAthlete(athleteJpaRepository);
+    DeleteAthlete deleteAthlete() {
+        return new DeleteAthlete(athleteRepository());
+    }
+
+    @Bean
+    UpdateAthlete updateAthlete() {
+        return new UpdateAthlete(athleteRepository());
     }
 }

@@ -1,81 +1,39 @@
 package com.mind.runner.business.entity;
 
+import com.mind.runner.business.entity.enums.Specialty;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import java.util.Date;
+
 public class Trainer {
 
-    private String id;
+    private Long id;
     private String firstName;
     private String lastName;
-    private String password;
     private String email;
-    private Integer age;
-    private String skill;
+    private Date birth;
+    private Specialty specialty;
+    private Date createdAt;
 
     public Trainer() {}
 
-    public Trainer(String id, String firstName, String lastName, String password, String email, Integer age, String skill) {
+    public Trainer(Long id, String firstName, String lastName, String email, Date birth, Specialty specialty,
+                   Date createdAt) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.password = password;
         this.email = email;
-        this.age = age;
-        this.skill = skill;
+        this.birth = birth;
+        this.specialty = specialty;
+        this.createdAt = createdAt;
     }
 
-    public static TrainerBuilder builder() {
-        return new TrainerBuilder();
-    }
-
-    public static class TrainerBuilder {
-
-        private String id;
-        private String firstName;
-        private String lastName;
-        private String password;
-        private String email;
-        private Integer age;
-        private String skill;
-
-        public TrainerBuilder withId(String id) {
-            this.id = id;
-            return this;
-        }
-
-        public TrainerBuilder withFirstName(String firstName) {
-            this.firstName = firstName;
-            return this;
-        }
-
-        public TrainerBuilder withLastName(String lastName) {
-            this.lastName = lastName;
-            return this;
-        }
-
-        public TrainerBuilder withEmail(String email) {
-            this.email = email;
-            return this;
-        }
-
-        public TrainerBuilder withAge(Integer age) {
-            this.age = age;
-            return this;
-        }
-
-        public TrainerBuilder withSkill(String skill) {
-            this.skill = skill;
-            return this;
-        }
-
-        public Trainer build() {
-            return new Trainer(id, firstName, lastName, password, email, age, skill);
-        }
-    }
-
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -95,14 +53,6 @@ public class Trainer {
         this.lastName = lastName;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -111,33 +61,86 @@ public class Trainer {
         this.email = email;
     }
 
-    public Integer getAge() {
-        return age;
+    public Date getBirth() {
+        return birth;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setBirth(Date birth) {
+        this.birth = birth;
     }
 
-    public String getSkill() {
-        return skill;
+    public Specialty getSpecialty() {
+        return specialty;
     }
 
-    public void setSkill(String skill) {
-        this.skill = skill;
+    public void setSpecialty(Specialty specialty) {
+        this.specialty = specialty;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public static TrainerBuilder builder() {
+        return new TrainerBuilder();
+    }
+
+    public static class TrainerBuilder {
+
+        private Long id;
+        private String firstName;
+        private String lastName;
+        private String email;
+        private Date birth;
+        private Specialty specialty;
+        private Date createdAt;
+
+        public TrainerBuilder withId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public TrainerBuilder withFirstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public TrainerBuilder withLastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public TrainerBuilder withEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public TrainerBuilder withBirth(Date birth) {
+            this.birth = birth;
+            return this;
+        }
+
+        public TrainerBuilder withSpecialty(Specialty specialty) {
+            this.specialty = specialty;
+            return this;
+        }
+
+        public TrainerBuilder withCreatedAt(Date createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        public Trainer build() {
+            return new Trainer(id, firstName, lastName, email, birth, specialty, createdAt);
+        }
     }
 
     @Override
     public String toString() {
-        return "Trainer{" +
-                "id='" + id + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", age=" + age +
-                ", skill='" + skill + '\'' +
-                '}';
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
-
 }

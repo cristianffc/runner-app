@@ -22,11 +22,8 @@ public interface AthleteRepository {
 
     List<Athlete> findByFirstNameIsStartingWith(String firstName);
 
-    List<Athlete> findByAgeBetween(Integer from, Integer to);
-
-    List<Athlete> findByGoalIsLike(String goal);
+    List<Athlete> findByEmailIsLike(String birth);
 
     List<Athlete> findByOrderByCreatedAtDesc();
 
-    List<Athlete> findAthleteBySoccerTraining();
 }

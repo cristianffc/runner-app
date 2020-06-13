@@ -1,4 +1,4 @@
-package com.mind.runner.business.usecase;
+package com.mind.runner.business.usecase.athlete;
 
 import com.mind.runner.business.entity.Athlete;
 import com.mind.runner.business.port.AthleteRepository;
@@ -29,8 +29,8 @@ public class UpdateAthlete {
     public Optional<Athlete> update(Long id, Athlete newAthlete) {
         Optional<Athlete> athlete = athleteRepository.findById(id);
         if(athlete.isPresent()) {
-            if (newAthlete.getAge() != null) {
-                athlete.get().setAge(newAthlete.getAge());
+            if (newAthlete.getBirth() != null) {
+                athlete.get().setBirth(newAthlete.getBirth());
             }
             if (newAthlete.getFirstName() != null) {
                 athlete.get().setFirstName(newAthlete.getFirstName());
@@ -38,8 +38,11 @@ public class UpdateAthlete {
             if (newAthlete.getLastName() != null) {
                 athlete.get().setLastName(newAthlete.getLastName());
             }
-            if (newAthlete.getGoal() != null) {
-                athlete.get().setGoal(newAthlete.getGoal());
+            if (newAthlete.getObjective() != null) {
+                athlete.get().setObjective(newAthlete.getObjective());
+            }
+            if (newAthlete.getEmail() != null) {
+                athlete.get().setEmail(newAthlete.getEmail());
             }
             return Optional.of(athleteRepository.update(athlete.get()));
         }

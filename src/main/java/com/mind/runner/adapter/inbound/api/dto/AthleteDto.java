@@ -2,17 +2,19 @@ package com.mind.runner.adapter.inbound.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mind.runner.business.entity.Athlete;
+import com.mind.runner.business.entity.enums.Objective;
 import org.springframework.hateoas.RepresentationModel;
 import java.util.Date;
-import java.util.Optional;
 
 public class AthleteDto extends RepresentationModel<AthleteDto> {
 
     private Long id;
     private String firstName;
     private String lastName;
-    private Integer age;
-    private String goal;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
+    private Date birth;
+    private String email;
+    private Objective objective;
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
     private Date createdAt;
 
@@ -40,20 +42,28 @@ public class AthleteDto extends RepresentationModel<AthleteDto> {
         this.lastName = lastName;
     }
 
-    public Integer getAge() {
-        return age;
+    public Date getBirth() {
+        return birth;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setBirth(Date birth) {
+        this.birth = birth;
     }
 
-    public String getGoal() {
-        return goal;
+    public String getEmail() {
+        return email;
     }
 
-    public void setGoal(String goal) {
-        this.goal = goal;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Objective getObjective() {
+        return objective;
+    }
+
+    public void setObjective(Objective objective) {
+        this.objective = objective;
     }
 
     public Date getCreatedAt() {
@@ -70,8 +80,9 @@ public class AthleteDto extends RepresentationModel<AthleteDto> {
         AthleteDto.setId(athlete.getId());
         AthleteDto.setFirstName(athlete.getFirstName());
         AthleteDto.setLastName(athlete.getLastName());
-        AthleteDto.setAge(athlete.getAge());
-        AthleteDto.setGoal(athlete.getGoal());
+        AthleteDto.setBirth(athlete.getBirth());
+        AthleteDto.setObjective(athlete.getObjective());
+        AthleteDto.setEmail(athlete.getEmail());
         AthleteDto.setCreatedAt(athlete.getCreatedAt());
 
         return AthleteDto;

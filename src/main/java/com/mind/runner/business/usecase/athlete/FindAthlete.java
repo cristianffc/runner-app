@@ -1,4 +1,4 @@
-package com.mind.runner.business.usecase;
+package com.mind.runner.business.usecase.athlete;
 
 import com.mind.runner.business.entity.Athlete;
 import com.mind.runner.business.port.AthleteRepository;
@@ -29,19 +29,12 @@ public class FindAthlete {
         return athleteRepository.findByFirstNameIsStartingWith(firstName);
     }
 
-    public List<Athlete> findByAgeBetween(Integer from, Integer to) {
-        return athleteRepository.findByAgeBetween(from, to);
-    }
-
-    public List<Athlete> findByGoalIsLike(String goal) {
-        return athleteRepository.findByGoalIsLike(goal);
+    public List<Athlete> findByEmailIsLike(String email) {
+        return athleteRepository.findByEmailIsLike(email);
     }
 
     public List<Athlete> findByOrderByCreatedAtDesc() {
         return athleteRepository.findByOrderByCreatedAtDesc();
     }
 
-    public List<Athlete> findAthleteBySoccerTraining() {
-        return athleteRepository.findAthleteBySoccerTraining();
-    }
 }

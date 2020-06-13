@@ -1,5 +1,9 @@
 package com.mind.runner.business.entity;
 
+import com.mind.runner.business.entity.enums.Objective;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import java.util.Date;
 
 public class Athlete {
@@ -7,66 +11,22 @@ public class Athlete {
     private Long id;
     private String firstName;
     private String lastName;
-    private Integer age;
-    private String goal;
+    private String email;
+    private Date birth;
+    private Objective objective;
     private Date createdAt;
 
     public Athlete() {}
 
-    private Athlete(Long id, String firstName, String lastName, Integer age, String goal, Date createAt) {
+    private Athlete(Long id, String firstName, String lastName, String email, Date birth, Objective objective,
+                    Date createAt) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.age = age;
-        this.goal = goal;
+        this.email = email;
+        this.objective = objective;
+        this.birth = birth;
         this.createdAt = createAt;
-    }
-
-    public static AthleteBuilder builder() {
-        return new AthleteBuilder();
-    }
-
-    public static class AthleteBuilder {
-        private Long id;
-        private String firstName;
-        private String lastName;
-        private Integer age;
-        private String goal;
-        private Date createdAt;
-
-        public AthleteBuilder withId(Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public AthleteBuilder withFirstName(String firstName) {
-            this.firstName = firstName;
-            return this;
-        }
-
-        public AthleteBuilder withLastName(String lastName) {
-            this.lastName = lastName;
-            return this;
-        }
-
-        public AthleteBuilder withAge(Integer age) {
-            this.age = age;
-            return this;
-        }
-
-        public AthleteBuilder withGoal(String goal) {
-            this.goal = goal;
-            return this;
-        }
-
-        public AthleteBuilder withCreatedAt(Date createdAt) {
-            this.createdAt = createdAt;
-            return this;
-        }
-
-        public Athlete build() {
-            return new Athlete(id, firstName, lastName, age, goal, createdAt);
-        }
     }
 
     public Long getId() {
@@ -93,35 +53,94 @@ public class Athlete {
         this.lastName = lastName;
     }
 
-    public Integer getAge() {
-        return age;
+    public String getEmail() {
+        return email;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getGoal() {
-        return goal;
+    public Date getBirth() {
+        return birth;
     }
 
-    public void setGoal(String goal) {
-        this.goal = goal;
+    public void setBirth(Date birth) {
+        this.birth = birth;
     }
 
-    public Date getCreatedAt() { return createdAt; }
+    public Objective getObjective() {
+        return objective;
+    }
 
-    public void setCreatedAt(Date createdAt) { this.createdAt = createdAt; }
+    public void setObjective(Objective objective) {
+        this.objective = objective;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public static AthleteBuilder builder() {
+        return new AthleteBuilder();
+    }
+
+    public static class AthleteBuilder {
+
+        private Long id;
+        private String firstName;
+        private String lastName;
+        private String email;
+        private Date birth;
+        private Objective objective;
+        private Date createdAt;
+
+        public AthleteBuilder withId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public AthleteBuilder withFirstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public AthleteBuilder withLastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public AthleteBuilder withEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public AthleteBuilder withObjective(Objective objective) {
+            this.objective = objective;
+            return this;
+        }
+
+        public AthleteBuilder withBirth(Date birth) {
+            this.birth = birth;
+            return this;
+        }
+
+        public AthleteBuilder withCreatedAt(Date createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        public Athlete build() {
+            return new Athlete(id, firstName, lastName, email, birth, objective, createdAt);
+        }
+    }
 
     @Override
     public String toString() {
-        return "Athlete{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", age=" + age +
-                ", goal='" + goal + '\'' +
-                ", createdAt=" + createdAt +
-                '}';
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
 }

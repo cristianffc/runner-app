@@ -1,6 +1,8 @@
-package com.mind.runner.adapter.outbound.repository.jpa.model;
+package com.mind.runner.adapter.outbound.jpa.entity;
 
 import com.mind.runner.business.entity.Athlete;
+import com.mind.runner.business.entity.enums.Objective;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -15,18 +17,25 @@ public class AthleteJpaEntity {
     private Long id;
     private String firstName;
     private String lastName;
-    private Integer age;
-    private String goal;
+    private Date birth;
+    private Objective objective;
+    private String email;
     private Date createdAt;
 
     public AthleteJpaEntity() {}
 
-    private AthleteJpaEntity(Long id, String firstName, String lastName, String password, Integer age, String goal) {
+    public AthleteJpaEntity(Long id, String firstName, String lastName, Date birth, Objective objective, String email, Date createdAt) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.age = age;
-        this.goal = goal;
+        this.birth = birth;
+        this.objective = objective;
+        this.email = email;
+        this.createdAt = createdAt;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public Long getId() {
@@ -53,23 +62,33 @@ public class AthleteJpaEntity {
         this.lastName = lastName;
     }
 
-    public Integer getAge() {
-        return age;
+    public Date getBirth() {
+        return birth;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setBirth(Date birth) {
+        this.birth = birth;
     }
 
-    public String getGoal() {
-        return goal;
+    public Objective getObjective() {
+        return objective;
     }
 
-    public void setGoal(String goal) {
-        this.goal = goal;
+    public void setObjective(Objective objective) {
+        this.objective = objective;
     }
 
-    public Date getCreatedAt() { return createdAt; }
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
@@ -85,8 +104,9 @@ public class AthleteJpaEntity {
                 withId(id).
                 withFirstName(firstName).
                 withLastName(lastName).
-                withAge(age).
-                withGoal(goal).
+                withBirth(birth).
+                withEmail(email).
+                withObjective(objective).
                 withCreatedAt(createdAt).
                 build();
     }
@@ -97,8 +117,9 @@ public class AthleteJpaEntity {
         athleteJpaEntity.setId(athlete.getId());
         athleteJpaEntity.setFirstName(athlete.getFirstName());
         athleteJpaEntity.setLastName(athlete.getLastName());
-        athleteJpaEntity.setAge(athlete.getAge());
-        athleteJpaEntity.setGoal(athlete.getGoal());
+        athleteJpaEntity.setBirth(athlete.getBirth());
+        athleteJpaEntity.setObjective(athlete.getObjective());
+        athleteJpaEntity.setEmail(athlete.getEmail());
 
         return athleteJpaEntity;
     }
