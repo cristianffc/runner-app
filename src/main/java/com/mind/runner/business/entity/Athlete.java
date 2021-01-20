@@ -14,6 +14,7 @@ public class Athlete {
     private String email;
     private Date birth;
     private Objective objective;
+    private Track track;
     private Date createdAt;
 
     public Athlete() {}
