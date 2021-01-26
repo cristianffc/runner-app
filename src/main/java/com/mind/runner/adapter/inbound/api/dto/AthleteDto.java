@@ -2,7 +2,6 @@ package com.mind.runner.adapter.inbound.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mind.runner.business.entity.Athlete;
-import com.mind.runner.business.entity.enums.Objective;
 import org.springframework.hateoas.RepresentationModel;
 import java.util.Date;
 
@@ -14,7 +13,6 @@ public class AthleteDto extends RepresentationModel<AthleteDto> {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
     private Date birth;
     private String email;
-    private Objective objective;
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
     private Date createdAt;
 
@@ -58,14 +56,6 @@ public class AthleteDto extends RepresentationModel<AthleteDto> {
         this.email = email;
     }
 
-    public Objective getObjective() {
-        return objective;
-    }
-
-    public void setObjective(Objective objective) {
-        this.objective = objective;
-    }
-
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -81,7 +71,6 @@ public class AthleteDto extends RepresentationModel<AthleteDto> {
         AthleteDto.setFirstName(athlete.getFirstName());
         AthleteDto.setLastName(athlete.getLastName());
         AthleteDto.setBirth(athlete.getBirth());
-        AthleteDto.setObjective(athlete.getObjective());
         AthleteDto.setEmail(athlete.getEmail());
         AthleteDto.setCreatedAt(athlete.getCreatedAt());
 

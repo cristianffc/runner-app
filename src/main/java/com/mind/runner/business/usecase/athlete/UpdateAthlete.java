@@ -38,9 +38,6 @@ public class UpdateAthlete {
             if (newAthlete.getLastName() != null) {
                 athlete.get().setLastName(newAthlete.getLastName());
             }
-            if (newAthlete.getObjective() != null) {
-                athlete.get().setObjective(newAthlete.getObjective());
-            }
             if (newAthlete.getEmail() != null) {
                 athlete.get().setEmail(newAthlete.getEmail());
             }

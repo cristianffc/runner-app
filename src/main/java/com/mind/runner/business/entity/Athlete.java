@@ -1,6 +1,5 @@
 package com.mind.runner.business.entity;
 
-import com.mind.runner.business.entity.enums.Objective;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -13,19 +12,16 @@ public class Athlete {
     private String lastName;
     private String email;
     private Date birth;
-    private Objective objective;
-    private Track track;
     private Date createdAt;
 
     public Athlete() {}
 
-    private Athlete(Long id, String firstName, String lastName, String email, Date birth, Objective objective,
+    private Athlete(Long id, String firstName, String lastName, String email, Date birth,
                     Date createAt) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.objective = objective;
         this.birth = birth;
         this.createdAt = createAt;
     }
@@ -70,14 +66,6 @@ public class Athlete {
         this.birth = birth;
     }
 
-    public Objective getObjective() {
-        return objective;
-    }
-
-    public void setObjective(Objective objective) {
-        this.objective = objective;
-    }
-
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -97,7 +85,6 @@ public class Athlete {
         private String lastName;
         private String email;
         private Date birth;
-        private Objective objective;
         private Date createdAt;
 
         public AthleteBuilder withId(Long id) {
@@ -120,11 +107,6 @@ public class Athlete {
             return this;
         }
 
-        public AthleteBuilder withObjective(Objective objective) {
-            this.objective = objective;
-            return this;
-        }
-
         public AthleteBuilder withBirth(Date birth) {
             this.birth = birth;
             return this;
@@ -136,7 +118,7 @@ public class Athlete {
         }
 
         public Athlete build() {
-            return new Athlete(id, firstName, lastName, email, birth, objective, createdAt);
+            return new Athlete(id, firstName, lastName, email, birth, createdAt);
         }
     }
 

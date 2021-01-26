@@ -1,7 +1,6 @@
 package com.mind.runner.adapter.outbound.jpa.entity;
 
 import com.mind.runner.business.entity.Athlete;
-import com.mind.runner.business.entity.enums.Objective;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -18,18 +17,16 @@ public class AthleteJpaEntity {
     private String firstName;
     private String lastName;
     private Date birth;
-    private Objective objective;
     private String email;
     private Date createdAt;
 
     public AthleteJpaEntity() {}
 
-    public AthleteJpaEntity(Long id, String firstName, String lastName, Date birth, Objective objective, String email, Date createdAt) {
+    public AthleteJpaEntity(Long id, String firstName, String lastName, Date birth, String email, Date createdAt) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birth = birth;
-        this.objective = objective;
         this.email = email;
         this.createdAt = createdAt;
     }
@@ -70,14 +67,6 @@ public class AthleteJpaEntity {
         this.birth = birth;
     }
 
-    public Objective getObjective() {
-        return objective;
-    }
-
-    public void setObjective(Objective objective) {
-        this.objective = objective;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -106,7 +95,6 @@ public class AthleteJpaEntity {
                 withLastName(lastName).
                 withBirth(birth).
                 withEmail(email).
-                withObjective(objective).
                 withCreatedAt(createdAt).
                 build();
     }
@@ -118,7 +106,6 @@ public class AthleteJpaEntity {
         athleteJpaEntity.setFirstName(athlete.getFirstName());
         athleteJpaEntity.setLastName(athlete.getLastName());
         athleteJpaEntity.setBirth(athlete.getBirth());
-        athleteJpaEntity.setObjective(athlete.getObjective());
         athleteJpaEntity.setEmail(athlete.getEmail());
 
         return athleteJpaEntity;
