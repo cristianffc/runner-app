@@ -5,6 +5,8 @@ import com.mind.runner.business.port.AthleteRepository;
 
 import java.util.Optional;
 
+import static java.util.Optional.of;
+
 /**
  * Update athlete user story
  */
@@ -18,30 +20,44 @@ public class UpdateAthlete {
     }
 
     public Optional<Athlete> updateIdempotent(Long id, Athlete newAthlete) {
-        Optional<Athlete> athlete = athleteRepository.findById(id);
+        var athlete = athleteRepository.findById(id);
+
         if (athlete.isPresent()) {
-            newAthlete.setId(athlete.get().getId());
-            return Optional.of(athleteRepository.update(newAthlete));
+            Athlete athleteToUpdate = Athlete.builder()
+                    .withId(id)
+                    .withBirth(newAthlete.getBirth())
+                    .withFirstName(newAthlete.getFirstName())
+                    .withLastName(newAthlete.getLastName())
+                    .withCreatedAt(newAthlete.getCreatedAt())
+                    .build();
+
+            return of(athleteRepository.update(athleteToUpdate));
         }
         return athlete;
     }
 
     public Optional<Athlete> update(Long id, Athlete newAthlete) {
         Optional<Athlete> athlete = athleteRepository.findById(id);
-        if(athlete.isPresent()) {
-            if (newAthlete.getBirth() != null) {
-                athlete.get().setBirth(newAthlete.getBirth());
-            }
-            if (newAthlete.getFirstName() != null) {
-                athlete.get().setFirstName(newAthlete.getFirstName());
-            }
-            if (newAthlete.getLastName() != null) {
-                athlete.get().setLastName(newAthlete.getLastName());
-            }
-            if (newAthlete.getEmail() != null) {
-                athlete.get().setEmail(newAthlete.getEmail());
-            }
-            return Optional.of(athleteRepository.update(athlete.get()));
+
+        if (athlete.isPresent()) {
+            var birth = newAthlete.getBirth() != null ?
+                    newAthlete.getBirth() : athlete.get().getBirth();
+            var firstName = newAthlete.getFirstName() != null ?
+                    newAthlete.getFirstName() : athlete.get().getFirstName();
+            var lastName = newAthlete.getLastName() != null ?
+                    newAthlete.getLastName() : athlete.get().getLastName();
+            var email = newAthlete.getEmail() != null ?
+                    newAthlete.getEmail() : athlete.get().getEmail();
+
+            Athlete athleteToUpdate = Athlete.builder()
+                    .withId(id)
+                    .withCreatedAt(athlete.get().getCreatedAt())
+                    .withFirstName(firstName)
+                    .withLastName(lastName)
+                    .withEmail(email)
+                    .build();
+
+            return of(athleteRepository.update(athleteToUpdate));
         }
         return athlete;
     }

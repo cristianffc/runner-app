@@ -35,15 +35,15 @@ public class RunnerApplication implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
-        Athlete a1 = new Athlete().builder().withFirstName("Test fake").withLastName("Mock1 last name").
+        Athlete a1 = Athlete.builder().withFirstName("Test fake").withLastName("Mock1 last name").
                 withBirth(new Date()).build();
-        Athlete a2 = new Athlete().builder().withFirstName("Mock Second").withLastName("Mock2 last name").
+        Athlete a2 = Athlete.builder().withFirstName("Mock Second").withLastName("Mock2 last name").
                 withBirth(new Date()).build();
-        Athlete a3 = new Athlete().builder().withFirstName("Mock Third").withLastName("Mock3 last name").
+        Athlete a3 = Athlete.builder().withFirstName("Mock Third").withLastName("Mock3 last name").
                 withBirth(new Date()).build();
-        Athlete a4 = new Athlete().builder().withFirstName("Mock Fourth").withLastName("Mock4 last name").
+        Athlete a4 = Athlete.builder().withFirstName("Mock Fourth").withLastName("Mock4 last name").
                 withBirth(new Date()).build();
-        Athlete a5 = new Athlete().builder().withFirstName("Mock Fifth").withLastName("Mock5 last name").
+        Athlete a5 = Athlete.builder().withFirstName("Mock Fifth").withLastName("Mock5 last name").
                 withBirth(new Date()).build();
 
         saveAthlete.save(a1);
