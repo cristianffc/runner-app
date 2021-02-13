@@ -15,63 +15,65 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-@Api(value = "API")
+@Api(value = "Athlete API")
 public class AthleteApi {
 
-    private FindAthlete findAthlete;
-    private SaveAthlete saveAthlete;
-    private UpdateAthlete updateAthlete;
-    private DeleteAthlete deleteAthlete;
+    private final FindAthlete findAthlete;
+    private final SaveAthlete saveAthlete;
+    private final UpdateAthlete updateAthlete;
+    private final DeleteAthlete deleteAthlete;
 
-    public AthleteApi(FindAthlete findAthlete, SaveAthlete saveAthlete, UpdateAthlete updateAthlete,
-                      DeleteAthlete deleteAthlete) {
+    public AthleteApi(final FindAthlete findAthlete,
+                      final SaveAthlete saveAthlete,
+                      final UpdateAthlete updateAthlete,
+                      final DeleteAthlete deleteAthlete) {
         this.findAthlete = findAthlete;
         this.saveAthlete = saveAthlete;
         this.updateAthlete = updateAthlete;
         this.deleteAthlete = deleteAthlete;
     }
 
-    @GetMapping("/athletes")
     @ApiOperation(value = "Find all athletes", produces = "application/json")
+    @GetMapping("/athletes")
     public ResponseEntity<List<AthleteDto>> findAll() {
         try {
-            List<AthleteDto> athletesDto = findAthlete.findAll()
-                                                      .stream()
-                                                      .map(AthleteDto::athleteDtoBuilder)
-                                                      .collect(Collectors.toList());
+            final var athletesDto = findAthlete.findAll()
+                    .stream()
+                    .map(AthleteDto::athleteDtoBuilder)
+                    .collect(toList());
             //HATEOAS
-            athletesDto.forEach(athleteDto -> athleteDto.add(linkTo(methodOn(AthleteApi.class).findById(
-                    athleteDto.getId())).withSelfRel()));
+            athletesDto.forEach(athleteDto ->
+                    athleteDto.add(linkTo(methodOn(AthleteApi.class).findById(
+                            athleteDto.getId())).withSelfRel()));
             return new ResponseEntity<>(athletesDto, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @PostMapping(path = "/athletes", consumes = "application/json", produces = "application/json")
     @ApiOperation(value = "Save athlete")
-    public ResponseEntity<AthleteDto> save(@RequestBody Athlete newAthlete) {
+    @PostMapping(path = "/athletes", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<AthleteDto> save(@RequestBody final Athlete newAthlete) {
         try {
-            AthleteDto athleteDto = AthleteDto.athleteDtoBuilder(saveAthlete.save(newAthlete));
+            final var athleteDto = AthleteDto.athleteDtoBuilder(saveAthlete.save(newAthlete));
             return new ResponseEntity<>(athleteDto, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/athletes/{id}")
     @ApiOperation(value = "Find athlete by id", produces = "application/json")
-    public ResponseEntity<AthleteDto> findById(@PathVariable Long id) {
+    @GetMapping("/athletes/{id}")
+    public ResponseEntity<AthleteDto> findById(@PathVariable final Long id) {
         try {
-            Optional<Athlete> athlete = findAthlete.findById(id);
-            if(athlete.isPresent()) {
+            final var athlete = findAthlete.findById(id);
+            if (athlete.isPresent()) {
                 AthleteDto athleteDto = AthleteDto.athleteDtoBuilder(athlete.get());
 
                 //HATEOAS
@@ -86,13 +88,14 @@ public class AthleteApi {
         }
     }
 
-    @PutMapping(path = "/athletes/{id}", consumes = "application/json", produces = "application/json")
     @ApiOperation(value = "Update athlete (idempotent action)")
-    public ResponseEntity<AthleteDto> updateIdempotent(@PathVariable Long id, @RequestBody Athlete newAthlete) {
+    @PutMapping(path = "/athletes/{id}", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<AthleteDto> updateIdempotent(@PathVariable final Long id,
+                                                       @RequestBody final Athlete newAthlete) {
         try {
-            Optional<Athlete> athlete = updateAthlete.updateIdempotent(id, newAthlete);
-            if(athlete.isPresent()) {
-                AthleteDto athleteDto = AthleteDto.athleteDtoBuilder(athlete.get());
+            final var athlete = updateAthlete.updateIdempotent(id, newAthlete);
+            if (athlete.isPresent()) {
+                final var athleteDto = AthleteDto.athleteDtoBuilder(athlete.get());
                 return new ResponseEntity<>(athleteDto, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -102,13 +105,14 @@ public class AthleteApi {
         }
     }
 
-    @PatchMapping(path = "/athletes/{id}", consumes = "application/json", produces = "application/json")
     @ApiOperation(value = "Update athlete (not idempotent action)")
-    public ResponseEntity<AthleteDto> update(@PathVariable Long id, @RequestBody Athlete newAthlete) {
+    @PatchMapping(path = "/athletes/{id}", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<AthleteDto> update(@PathVariable final Long id,
+                                             @RequestBody final Athlete newAthlete) {
         try {
-            Optional<Athlete> athlete = updateAthlete.update(id, newAthlete);
-            if(athlete.isPresent()) {
-                AthleteDto athleteDto = AthleteDto.athleteDtoBuilder(athlete.get());
+            final var athlete = updateAthlete.update(id, newAthlete);
+            if (athlete.isPresent()) {
+                final var athleteDto = AthleteDto.athleteDtoBuilder(athlete.get());
                 return new ResponseEntity<>(athleteDto, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -118,9 +122,9 @@ public class AthleteApi {
         }
     }
 
-    @DeleteMapping(path = "/athletes/{id}", produces = "application/json")
     @ApiOperation(value = "Delete athlete")
-    public ResponseEntity<AthleteDto> delete(@PathVariable Long id) {
+    @DeleteMapping(path = "/athletes/{id}", produces = "application/json")
+    public ResponseEntity<AthleteDto> delete(@PathVariable final Long id) {
         try {
             deleteAthlete.delete(id);
             return new ResponseEntity<>(null, HttpStatus.OK);
@@ -132,12 +136,12 @@ public class AthleteApi {
         }
     }
 
-    @RequestMapping(value = "/athletes/{id}", method = RequestMethod.OPTIONS)
     @ApiOperation(value = "Available verbs")
+    @RequestMapping(value = "/athletes/{id}", method = RequestMethod.OPTIONS)
     public ResponseEntity<?> options() {
         return ResponseEntity.ok()
-                             .allow(HttpMethod.GET, HttpMethod.DELETE, HttpMethod.PUT, HttpMethod.PATCH,
-                                     HttpMethod.OPTIONS)
-                             .build();
+                .allow(HttpMethod.GET, HttpMethod.DELETE, HttpMethod.PUT, HttpMethod.PATCH,
+                        HttpMethod.OPTIONS)
+                .build();
     }
 }

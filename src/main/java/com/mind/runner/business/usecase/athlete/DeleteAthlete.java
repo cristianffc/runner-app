@@ -10,11 +10,11 @@ public class DeleteAthlete {
 
     private final AthleteRepository athleteRepository;
 
-    public DeleteAthlete(AthleteRepository athleteRepository) {
+    public DeleteAthlete(final AthleteRepository athleteRepository) {
         this.athleteRepository = athleteRepository;
     }
 
-    public void delete(Long id) {
+    public void delete(final Long id) {
         athleteRepository.deleteById(id);
     }
 }

@@ -2,9 +2,12 @@ package com.mind.runner.adapter.inbound.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mind.runner.business.entity.Athlete;
+import lombok.Data;
 import org.springframework.hateoas.RepresentationModel;
+
 import java.util.Date;
 
+@Data
 public class AthleteDto extends RepresentationModel<AthleteDto> {
 
     private Long id;
@@ -16,56 +19,8 @@ public class AthleteDto extends RepresentationModel<AthleteDto> {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
     private Date createdAt;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public Date getBirth() {
-        return birth;
-    }
-
-    public void setBirth(Date birth) {
-        this.birth = birth;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public static AthleteDto athleteDtoBuilder(Athlete athlete) {
-        var AthleteDto = new AthleteDto();
+    public static AthleteDto athleteDtoBuilder(final Athlete athlete) {
+        final var AthleteDto = new AthleteDto();
 
         AthleteDto.setId(athlete.getId());
         AthleteDto.setFirstName(athlete.getFirstName());

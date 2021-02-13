@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import javax.sql.DataSource;
 
 @Configuration
@@ -16,13 +17,16 @@ import javax.sql.DataSource;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private String security;
-    
-    @Autowired
+
     DataSource dataSource;
+
+    public SecurityConfiguration(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        if(security != null && security.equals("true")) {
+        if (security != null && security.equals("true")) {
             http.authorizeRequests()
                     .antMatchers("/h2/**").permitAll()
                     .anyRequest().authenticated()//all other urls can be access by any authenticated role

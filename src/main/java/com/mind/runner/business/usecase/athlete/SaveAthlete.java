@@ -11,11 +11,11 @@ public class SaveAthlete {
 
     private final AthleteRepository athleteRepository;
 
-    public SaveAthlete(AthleteRepository athleteRepository) {
+    public SaveAthlete(final AthleteRepository athleteRepository) {
         this.athleteRepository = athleteRepository;
     }
 
-    public Athlete save(Athlete athlete){
+    public Athlete save(final Athlete athlete) {
         return athleteRepository.save(athlete);
     }
 }

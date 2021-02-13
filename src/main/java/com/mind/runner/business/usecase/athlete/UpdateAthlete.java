@@ -15,11 +15,11 @@ public class UpdateAthlete {
 
     private final AthleteRepository athleteRepository;
 
-    public UpdateAthlete(AthleteRepository athleteRepository) {
+    public UpdateAthlete(final AthleteRepository athleteRepository) {
         this.athleteRepository = athleteRepository;
     }
 
-    public Optional<Athlete> updateIdempotent(Long id, Athlete newAthlete) {
+    public Optional<Athlete> updateIdempotent(final Long id, final Athlete newAthlete) {
         var athlete = athleteRepository.findById(id);
 
         if (athlete.isPresent()) {
@@ -36,8 +36,8 @@ public class UpdateAthlete {
         return athlete;
     }
 
-    public Optional<Athlete> update(Long id, Athlete newAthlete) {
-        Optional<Athlete> athlete = athleteRepository.findById(id);
+    public Optional<Athlete> update(final Long id, final Athlete newAthlete) {
+        final var athlete = athleteRepository.findById(id);
 
         if (athlete.isPresent()) {
             var birth = newAthlete.getBirth() != null ?
@@ -49,7 +49,7 @@ public class UpdateAthlete {
             var email = newAthlete.getEmail() != null ?
                     newAthlete.getEmail() : athlete.get().getEmail();
 
-            Athlete athleteToUpdate = Athlete.builder()
+            var athleteToUpdate = Athlete.builder()
                     .withId(id)
                     .withCreatedAt(athlete.get().getCreatedAt())
                     .withFirstName(firstName)

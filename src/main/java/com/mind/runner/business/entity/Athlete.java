@@ -1,8 +1,6 @@
 package com.mind.runner.business.entity;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.Value;
+import lombok.*;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -10,6 +8,8 @@ import java.util.Date;
 
 @Value
 @Builder(setterPrefix = "with")
+@AllArgsConstructor
+@NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
 public class Athlete {
 
     private Long id;
