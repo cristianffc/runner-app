@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -59,7 +60,7 @@ public class AthleteApi {
 
     @ApiOperation(value = "Save athlete")
     @PostMapping(path = "/athletes", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<AthleteDto> save(@RequestBody final Athlete newAthlete) {
+    public ResponseEntity<AthleteDto> save(@RequestBody @Valid final Athlete newAthlete) {
         try {
             final var athleteDto = AthleteDto.athleteDtoBuilder(saveAthlete.save(newAthlete));
             return new ResponseEntity<>(athleteDto, HttpStatus.CREATED);

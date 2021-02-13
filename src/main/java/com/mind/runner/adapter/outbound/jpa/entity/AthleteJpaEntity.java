@@ -1,6 +1,7 @@
 package com.mind.runner.adapter.outbound.jpa.entity;
 
 import com.mind.runner.business.entity.Athlete;
+import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -14,9 +15,12 @@ public class AthleteJpaEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
+    @NotNull
     private String firstName;
+    @NotNull
     private String lastName;
     private Date birth;
+    @NotNull
     private String email;
     private Date createdAt;
 

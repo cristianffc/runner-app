@@ -19,7 +19,7 @@ public class AthleteDto extends RepresentationModel<AthleteDto> {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
     private Date createdAt;
 
-    public static AthleteDto athleteDtoBuilder(final Athlete athlete) {
+    public static AthleteDto athleteDtoBuilder(Athlete athlete) {
         final var AthleteDto = new AthleteDto();
 
         AthleteDto.setId(athlete.getId());
